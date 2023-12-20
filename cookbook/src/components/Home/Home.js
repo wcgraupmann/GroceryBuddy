@@ -1,11 +1,16 @@
 import React from "react";
+import logo from "../../../src/logo-color.png";
 
 class Home extends React.Component {
   render() {
     return (
       <div>
-        <div className="bg-[#ffe4c4] my-5 mx-16 p-16 border border-black rounded">
-          <h1>Welcome to Cookbook Club</h1>
+        <div className="flex justify-center">
+          <img
+            class="h-60 w-80 object-contain rounded-md"
+            src={logo}
+            alt="description"
+          />
         </div>
         <div className="m-5 p-10 border border-black flex bg-stone-300 rounded">
           <p className="flex-auto border border-black bg-stone-200 rounded basis-1/4">
