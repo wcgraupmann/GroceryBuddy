@@ -11,6 +11,7 @@ class Signin extends React.Component {
 
   onSubmitSignIn = () => {
     this.props.onRouteChange("main");
+    this.props.onSignIn();
   };
 
   render() {

@@ -12,6 +12,7 @@ class Register extends React.Component {
 
   onSubmitRegister = () => {
     this.props.onRouteChange("main");
+    this.props.onSignIn();
   };
 
   render() {
