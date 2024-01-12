@@ -15,7 +15,7 @@ class Hub extends React.Component {
     return (
       <div>
         <div>
-          <h1>Your Cookbook Hub</h1>
+          <h1>User's Profile Page</h1>
         </div>
         <div className="flex">
           <div className="border border-black mt-8 ml-8 mr-2 p-8 bg-slate-200">
