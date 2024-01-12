@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../../src/logo-color.png";
 
-class Main extends React.Component {
+class Hub extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -38,4 +38,4 @@ class Main extends React.Component {
     );
   }
 }
-export default Main;
+export default Hub;

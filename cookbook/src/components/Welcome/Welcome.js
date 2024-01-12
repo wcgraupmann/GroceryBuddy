@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../../src/logo-color.png";
 
-class Home extends React.Component {
+class Welcome extends React.Component {
   render() {
     return (
       <div>
@@ -42,4 +42,4 @@ class Home extends React.Component {
     );
   }
 }
-export default Home;
+export default Welcome;

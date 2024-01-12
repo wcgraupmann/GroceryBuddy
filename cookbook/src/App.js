@@ -1,11 +1,11 @@
 import "./App.css";
 import { Component } from "react";
 import Navigation from "./components/Navigation/Navigation";
-import Home from "./components/Home/Home";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
-import Main from "./components/Main/Main";
 import Cookbook from "./components/Cookbook/Cookbook";
+import Welcome from "./components/Welcome/Welcome";
+import Hub from "./components/Hub/Hub";
 
 const initalState = {
   isSignedIn: false,
@@ -42,9 +42,9 @@ class App extends Component {
           onRouteChange={this.onRouteChange}
         />
         {this.state.route === "home" ? (
-          <Home />
+          <Welcome />
         ) : this.state.route === "main" ? (
-          <Main onRouteChange={this.onRouteChange} />
+          <Hub onRouteChange={this.onRouteChange} />
         ) : this.state.route === "cookbook" ? (
           <Cookbook />
         ) : this.state.route === "signin" ? (

@@ -1,6 +1,6 @@
 import React from "react";
 // import logo from "../../../src/logo-color.png";
-import Recipe from "../Recipe/Recipe";
+import RecipeCard from "../RecipeCard/RecipeCard";
 
 class Cookbook extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class Cookbook extends React.Component {
             </ul>
           </div>
           <div className="bg-[#ffe4c4] my-5 mx-16 p-16 border border-black rounded flex mt-8">
-            <Recipe />
+            <RecipeCard />
           </div>
         </div>
       </div>
