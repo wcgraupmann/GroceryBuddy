@@ -1,5 +1,5 @@
 import "./App.css";
-import { Component } from "react";
+import React, { Component } from "react";
 import Navigation from "./components/Navigation/Navigation";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
@@ -10,6 +10,13 @@ import Hub from "./components/Hub/Hub";
 const initalState = {
   isSignedIn: false,
   route: "home",
+  user: {
+    id: "",
+    name: "",
+    email: "",
+    entries: 0,
+    joined: "",
+  },
 };
 class App extends Component {
   constructor() {
@@ -19,6 +26,24 @@ class App extends Component {
       route: "home",
     };
   }
+
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined,
+      },
+    });
+  };
+
+  // componentDidMount() {
+  //   fetch("http:localhost:3000/")
+  //     .then((res) => res.json())
+  //     .then(console.log);
+  // }
 
   onRouteChange = (route) => {
     if (route === "signout") {
@@ -48,7 +73,7 @@ class App extends Component {
         ) : this.state.route === "cookbook" ? (
           <Cookbook />
         ) : this.state.route === "signin" ? (
-          <Signin onRouteChange={this.onRouteChange} onSignIn={this.onSignIn} />
+          <Signin onRouteChange={this.onRouteChange} onSignIn={this.loadUser} />
         ) : (
           <Register
             onRouteChange={this.onRouteChange}

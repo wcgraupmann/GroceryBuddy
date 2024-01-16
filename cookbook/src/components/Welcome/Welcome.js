@@ -6,7 +6,7 @@ const Welcome = () => {
     <div>
       <div className="flex justify-center">
         <img
-          class="h-60 w-80 object-contain rounded-md"
+          className="h-60 w-80 object-contain rounded-md"
           src={logo}
           alt="description"
         />
