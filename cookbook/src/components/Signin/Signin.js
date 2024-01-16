@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "../../logo-color.png";
 
 class Signin extends React.Component {
   constructor(props) {
@@ -16,11 +17,11 @@ class Signin extends React.Component {
 
   render() {
     return (
-      <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+      <div class="flex min-h-full flex-col justify-center px-6 pb-12 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            class="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            class="mx-auto h-30 w-auto border rounded"
+            src={logo}
             alt="Your Company"
           />
           <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
