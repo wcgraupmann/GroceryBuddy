@@ -21,10 +21,7 @@ const initalState = {
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      isSignedIn: false,
-      route: "home",
-    };
+    this.state = initalState;
   }
 
   loadUser = (data) => {
@@ -35,20 +32,15 @@ class App extends Component {
         email: data.email,
         entries: data.entries,
         joined: data.joined,
+        recipes: data.recipes,
       },
     });
   };
 
-  // componentDidMount() {
-  //   fetch("http:localhost:3000/")
-  //     .then((res) => res.json())
-  //     .then(console.log);
-  // }
-
   onRouteChange = (route) => {
     if (route === "signout") {
       this.setState(initalState);
-    } else if (route === "") {
+    } else if (route === "main") {
       this.setState({ isSignedIn: true });
     }
     this.setState({ route: route });
@@ -75,10 +67,7 @@ class App extends Component {
         ) : this.state.route === "signin" ? (
           <Signin onRouteChange={this.onRouteChange} onSignIn={this.loadUser} />
         ) : (
-          <Register
-            onRouteChange={this.onRouteChange}
-            onSignIn={this.onSignIn}
-          />
+          <Register onRouteChange={this.onRouteChange} />
         )}
       </div>
     );

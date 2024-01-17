@@ -23,7 +23,7 @@ class Hub extends React.Component {
           </div>
           <div className="bg-[#ffe4c4] my-5 mx-16 p-16 border border-black rounded flex mt-8">
             <img
-              class="h-60 w-80 object-contain rounded-md"
+              className="h-60 w-80 object-contain rounded-md"
               src={logo}
               alt="description"
             />

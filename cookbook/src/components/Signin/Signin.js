@@ -11,7 +11,6 @@ class Signin extends React.Component {
   }
 
   onEmailChage = (event) => {
-    console.log(event.target.value);
     this.setState({ signInEmail: event.target.value });
   };
 
@@ -29,14 +28,11 @@ class Signin extends React.Component {
       }),
     })
       .then((response) => response.json())
-      .then((user) => {
-        if (user.id) {
+      .then((data) => {
+        if (data.id) {
           this.props.onRouteChange("main");
-          this.props.loadUser(user);
         }
       });
-    // this.props.onRouteChange("main");
-    // this.props.onSignIn();
   };
 
   render() {
