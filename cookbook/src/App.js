@@ -21,8 +21,24 @@ const initalState = {
 class App extends Component {
   constructor() {
     super();
-    this.state = initalState;
+    this.state = {
+      isSignedIn: false,
+      route: "home",
+      user: {
+        id: "",
+        name: "",
+        email: "",
+        entries: 0,
+        joined: "",
+      },
+    };
   }
+
+  // componentDidMount() {
+  //   fetch("http://localhost:3000")
+  //     .then((response) => response.json())
+  //     .then(console.log);
+  // }
 
   loadUser = (data) => {
     this.setState({
@@ -32,7 +48,6 @@ class App extends Component {
         email: data.email,
         entries: data.entries,
         joined: data.joined,
-        recipes: data.recipes,
       },
     });
   };
@@ -42,29 +57,27 @@ class App extends Component {
       this.setState(initalState);
     } else if (route === "main") {
       this.setState({ isSignedIn: true });
+      console.log("isSignedIn set to true");
     }
     this.setState({ route: route });
-  };
-
-  onSignIn = () => {
-    this.setState({ isSignedIn: true });
+    console.log(`route is set to: ${route}`);
   };
 
   render() {
-    const { isSignedIn } = this.state;
+    const { isSignedIn, route } = this.state;
     return (
       <div className="App">
         <Navigation
           isSignedIn={isSignedIn}
           onRouteChange={this.onRouteChange}
         />
-        {this.state.route === "home" ? (
+        {route === "home" ? (
           <Welcome />
-        ) : this.state.route === "main" ? (
+        ) : route === "main" ? (
           <Hub onRouteChange={this.onRouteChange} />
-        ) : this.state.route === "cookbook" ? (
+        ) : route === "cookbook" ? (
           <Cookbook />
-        ) : this.state.route === "signin" ? (
+        ) : route === "signin" ? (
           <Signin onRouteChange={this.onRouteChange} onSignIn={this.loadUser} />
         ) : (
           <Register onRouteChange={this.onRouteChange} />
