@@ -1,40 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import logo from "../../../src/logo-color.png";
 
-const Hub = ({ onRouteChange }) => {
-  const [userInfo, setUserInfo] = useState(null);
-  // fetch user info and store in useState
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          throw new Error("No token found");
-        }
-        const response = await fetch("http://localhost:3000/protected", {
-          method: "get",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-        const data = await response.json();
-        setUserInfo(data);
-      } catch (error) {
-        console.error("Error signing in:", error.message);
-      }
-    };
-    getUser();
-  }, []);
-
-  // console.log(userInfo);
-
+const Hub = ({ onRouteChange, userInfo }) => {
+  const { name } = userInfo;
+  console.log(userInfo.name);
   return (
     <div>
       <div>
-        <h1>Profile Page</h1>
+        <h1>{name}'s Profile Page</h1>
       </div>
       <div className="flex">
         <div className="border border-black mt-8 ml-8 mr-2 p-8 bg-slate-200">

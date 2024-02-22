@@ -1,17 +1,36 @@
 import React from "react";
 
-const Navigation = ({ isSignedIn, onRouteChange }) => {
+const Navigation = ({ isSignedIn, onRouteChange, route }) => {
   if (isSignedIn) {
-    return (
-      <nav className="flex justify-end">
-        <button
-          className="p-3 m-1 bg-slate-200 hover:bg-slate-300 rounded"
-          onClick={() => onRouteChange("signout")}
-        >
-          Sign Out
-        </button>
-      </nav>
-    );
+    if (route === "profile") {
+      return (
+        <nav className="flex justify-end">
+          <button
+            className="p-3 m-1 bg-slate-200 hover:bg-slate-300 rounded"
+            onClick={() => onRouteChange("signout")}
+          >
+            Sign Out
+          </button>
+        </nav>
+      );
+    } else {
+      return (
+        <nav className="flex justify-end">
+          <button
+            className="p-3 m-1 bg-slate-200 hover:bg-slate-300 rounded"
+            onClick={() => onRouteChange("profile")}
+          >
+            My Profile
+          </button>
+          <button
+            className="p-3 m-1 bg-slate-200 hover:bg-slate-300 rounded"
+            onClick={() => onRouteChange("signout")}
+          >
+            Sign Out
+          </button>
+        </nav>
+      );
+    }
   } else {
     return (
       <nav className="flex justify-end">
