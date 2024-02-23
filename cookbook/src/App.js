@@ -62,7 +62,7 @@ const App = () => {
       ) : route === "main" ? (
         <Hub onRouteChange={onRouteChange} userInfo={userInfo} />
       ) : route === "cookbook" ? (
-        <Cookbook />
+        <Cookbook userInfo={userInfo} />
       ) : route === "signin" ? (
         <Signin onRouteChange={onRouteChange} />
       ) : route === "profile" ? (
