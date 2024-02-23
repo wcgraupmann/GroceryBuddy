@@ -11,7 +11,7 @@ const Welcome = () => {
           alt="description"
         />
       </div>
-      <div className="m-5 p-10 border border-black flex bg-stone-300 rounded">
+      <div className="m-5 p-10 border border-black flex bg-stone-300 rounded shadow-2xl">
         <p className="flex-auto border border-black bg-stone-200 rounded basis-1/4">
           How it Works
         </p>
@@ -19,7 +19,7 @@ const Welcome = () => {
           Save your favorite new recipes and share them with your Cookbook Club!
         </p>
       </div>
-      <div className="m-5 p-10 border border-black flex bg-stone-300 rounded">
+      <div className="m-5 p-10 border border-black flex bg-stone-300 rounded shadow-2xl">
         <p className="flex-auto border border-black bg-stone-200 rounded basis-1/4">
           Features
         </p>
@@ -28,7 +28,7 @@ const Welcome = () => {
           other to try new dishes
         </p>
       </div>
-      <div className="m-5 p-10 border border-black flex bg-stone-300 rounded">
+      <div className="m-5 p-10 border border-black flex bg-stone-300 rounded shadow-2xl">
         <p className="flex-auto border border-black bg-stone-200 rounded basis-1/4">
           Explain community
         </p>
@@ -36,6 +36,7 @@ const Welcome = () => {
           Build a community or join a club that share your culinary interests
         </p>
       </div>
+      <footer className="m-8 p-8"></footer>
     </div>
   );
 };

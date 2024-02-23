@@ -51,7 +51,7 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <div className="App bg-gradient-to-r from-indigo-200 to-indigo-400">
       <Navigation
         isSignedIn={isSignedIn}
         onRouteChange={onRouteChange}
