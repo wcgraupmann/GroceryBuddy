@@ -7,6 +7,7 @@ import Cookbook from "./components/Cookbook/Cookbook";
 import Welcome from "./components/Welcome/Welcome";
 import Hub from "./components/Hub/Hub";
 import Profile from "./components/Profile/Profile";
+import GroceryList from "./components/GroceryList/GroceryList";
 
 const App = () => {
   const [route, setRoute] = useState("home");
@@ -67,6 +68,8 @@ const App = () => {
         <Signin onRouteChange={onRouteChange} />
       ) : route === "profile" ? (
         <Profile onRouteChange={onRouteChange} userInfo={userInfo} />
+      ) : route === "grocery" ? (
+        <GroceryList />
       ) : (
         <Register onRouteChange={onRouteChange} />
       )}
