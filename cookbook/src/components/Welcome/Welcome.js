@@ -36,6 +36,20 @@ const Welcome = () => {
           Build a community or join a club that share your culinary interests
         </p>
       </div>
+      <div>
+        <div className="bg-[#ffe4c4] my-5 mx-16 p-16 border border-black rounded flex mt-8">
+          <img
+            className="h-60 w-80 object-contain rounded-md"
+            src={logo}
+            alt="description"
+          />
+          <div className="ml-32 pl-8 pr-40 border border-black rounded-md flex flex-col justify-evenly">
+            <p>Share your most recent culinary conquests!</p>
+            <p>Upload your next recipe to create a grocery list</p>
+            <p>Discover new meals to add to your cookbook</p>
+          </div>
+        </div>
+      </div>
       <footer className="m-8 p-8"></footer>
     </div>
   );
