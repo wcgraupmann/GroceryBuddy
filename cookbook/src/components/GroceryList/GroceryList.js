@@ -3,8 +3,14 @@ import RecipeForm from "../RecipeForm/RecipeForm";
 
 const GroceryList = () => {
   const [selection, setSelection] = useState("add");
+  const [recipeList, setRecipeList] = useState(null);
+  const [exists, setExists] = useState(false);
 
-  //   const submitRecipe = () => {};
+  const setRecipe = (recipeArray) => {
+    setRecipeList(recipeArray);
+    setExists(true);
+    console.log(recipeList);
+  };
 
   if (selection === "view") {
     return (
@@ -28,21 +34,15 @@ const GroceryList = () => {
           </div>
         </div>
         {/* directory */}
-        <div className="flex border border-black m-8 rounded">
-          <ul className="border border-black m-8 p-8 rounded">
-            <li>Fruits and Vegetables</li>
-          </ul>
-          <ul className="border border-black m-8 p-8 rounded">
-            <li>Meat and Dairy</li>
-          </ul>
-          <ul className="border border-black m-8 p-8 rounded">
-            <li>Frozen</li>
-          </ul>
-          <ul className="border border-black m-8 p-8 rounded">
-            <li>To-do:</li>
-            <li>what other categories do we need</li>
-          </ul>
-        </div>
+        {exists && (
+          <div className="flex border border-black m-8 rounded">
+            <ul className="border border-black m-8 p-8 rounded">
+              {recipeList.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     );
   } else {
@@ -71,7 +71,7 @@ const GroceryList = () => {
         <div className="bg-indigo-200 m-8 py-8 px-20 border border-black">
           <h1 className="underline">Grocery List</h1>
           <p>Upload a recipe and automatically generate your grocery list</p>
-          <RecipeForm />
+          <RecipeForm setRecipe={setRecipe} />
         </div>
       </div>
     );

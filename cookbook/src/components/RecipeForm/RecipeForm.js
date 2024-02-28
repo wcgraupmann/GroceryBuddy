@@ -1,6 +1,15 @@
 import React from "react";
+import { generateList, parseList } from "../../functions/helpers";
+import recipe from "../../recipe.txt";
 
-const RecipeForm = () => {
+const RecipeForm = ({ setRecipe }) => {
+  //parse recipe from .txt file
+  const handleRecipe = async () => {
+    const recipeString = await parseList(recipe);
+    const recipeArray = generateList(recipeString);
+    setRecipe(recipeArray);
+  };
+
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <div>
@@ -58,6 +67,7 @@ const RecipeForm = () => {
 
       <div>
         <button
+          onClick={handleRecipe}
           type="submit"
           className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
