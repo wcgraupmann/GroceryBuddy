@@ -1,16 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RecipeForm from "../RecipeForm/RecipeForm";
+import ItemForm from "../ItemForm/ItemForm";
 
 const GroceryList = () => {
   const [selection, setSelection] = useState("add");
-  const [recipeList, setRecipeList] = useState(null);
+  const [recipeList, setRecipeList] = useState([]);
+  const [list, setList] = useState([]);
   const [exists, setExists] = useState(false);
+
+  // fetch grocery list from backend
+  const fetchGroceryList = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+      const response = await fetch("http://localhost:3000/groceryList", {
+        method: "get",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      const data = await response.json();
+      const { groceryList } = data.groceryList;
+      setList(groceryList);
+      console.log("userInfo", list);
+      // console.log("message", message);
+    } catch (error) {
+      console.error("Error signing in:", error.message);
+    }
+  };
 
   const setRecipe = (recipeArray) => {
     setRecipeList(recipeArray);
-    setExists(true);
+    // setExists(true);
     console.log(recipeList);
   };
+
+  useEffect(() => {
+    fetchGroceryList();
+  }, []);
 
   if (selection === "view") {
     return (
@@ -34,14 +66,16 @@ const GroceryList = () => {
           </div>
         </div>
         {/* directory */}
-        {exists && (
+        {exists ? (
           <div className="flex border border-black m-8 rounded">
             <ul className="border border-black m-8 p-8 rounded">
-              {recipeList.map((item) => (
+              {list.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
+        ) : (
+          <h1>Empty</h1>
         )}
       </div>
     );
@@ -69,9 +103,14 @@ const GroceryList = () => {
         </div>
         {/* directory */}
         <div className="bg-indigo-200 m-8 py-8 px-20 border border-black">
-          <h1 className="underline">Grocery List</h1>
+          <h1 className="underline">Add Recipe</h1>
           <p>Upload a recipe and automatically generate your grocery list</p>
           <RecipeForm setRecipe={setRecipe} />
+        </div>
+        <div className="bg-indigo-200 m-8 py-8 px-20 border border-black">
+          <h1 className="underline">Add Item</h1>
+          <p>Add Individual Items to your Grocery List</p>
+          <ItemForm />
         </div>
       </div>
     );

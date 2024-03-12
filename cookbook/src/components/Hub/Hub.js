@@ -4,7 +4,7 @@ import Feed from "../Feed/Feed";
 
 const Hub = ({ onRouteChange, userInfo }) => {
   const { name } = userInfo;
-  console.log(userInfo.name);
+  console.log("Hub.js", userInfo.name);
   return (
     <div>
       <div>

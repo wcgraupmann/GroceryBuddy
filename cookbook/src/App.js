@@ -44,8 +44,10 @@ const App = () => {
         throw new Error("Failed to fetch user data");
       }
       const data = await response.json();
+
       setUserInfo(data);
       console.log("userInfo", userInfo);
+      console.log("data", data);
     } catch (error) {
       console.error("Error signing in:", error.message);
     }
