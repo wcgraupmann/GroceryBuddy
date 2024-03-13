@@ -46,8 +46,8 @@ const App = () => {
       const data = await response.json();
 
       setUserInfo(data);
-      console.log("userInfo", userInfo);
-      console.log("data", data);
+      console.log("current data", data);
+      console.log("current userInfo", userInfo);
     } catch (error) {
       console.error("Error signing in:", error.message);
     }

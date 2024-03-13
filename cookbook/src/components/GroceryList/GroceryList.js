@@ -25,13 +25,18 @@ const GroceryList = () => {
         throw new Error("Failed to fetch user data");
       }
       const data = await response.json();
-      const { groceryList } = data.groceryList;
+      const { groceryList } = data;
       setList(groceryList);
-      console.log("userInfo", list);
+      console.log("fetched grocery list", data);
       // console.log("message", message);
     } catch (error) {
       console.error("Error signing in:", error.message);
     }
+  };
+
+  const viewGroceryList = async () => {
+    await fetchGroceryList();
+    setSelection("view");
   };
 
   const setRecipe = (recipeArray) => {
@@ -40,9 +45,40 @@ const GroceryList = () => {
     console.log(recipeList);
   };
 
-  useEffect(() => {
-    fetchGroceryList();
-  }, []);
+  // TODO: call fetchUserData or useEffect
+  // adds grocery item to backend grocery list
+  const sendItem = async (itemObj) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+      const response = await fetch("http://localhost:3000/addItem", {
+        method: "post",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(itemObj),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      const data = await response.json();
+      //
+      // const { newToken } = data;
+      // localStorage.setItem("token", newToken);
+      //
+
+      console.log("userInfo", data);
+    } catch (error) {
+      console.error("Error signing in:", error.message);
+    }
+  };
+
+  // useEffect(() => {
+  //   fetchGroceryList();
+  // }, []);
 
   if (selection === "view") {
     return (
@@ -66,16 +102,14 @@ const GroceryList = () => {
           </div>
         </div>
         {/* directory */}
-        {exists ? (
+        {list && (
           <div className="flex border border-black m-8 rounded">
             <ul className="border border-black m-8 p-8 rounded">
-              {list.map((item) => (
-                <li key={item}>{item}</li>
+              {list.map((item, index) => (
+                <li key={index}>{item.quantity + " " + item.item}</li>
               ))}
             </ul>
           </div>
-        ) : (
-          <h1>Empty</h1>
         )}
       </div>
     );
@@ -94,7 +128,7 @@ const GroceryList = () => {
               Add Recipe To List
             </button>
             <button
-              onClick={() => setSelection("view")}
+              onClick={viewGroceryList}
               className="p-1 m-1 bg-slate-300 hover:bg-slate-400 border border-black rounded"
             >
               Grocery List
@@ -110,7 +144,7 @@ const GroceryList = () => {
         <div className="bg-indigo-200 m-8 py-8 px-20 border border-black">
           <h1 className="underline">Add Item</h1>
           <p>Add Individual Items to your Grocery List</p>
-          <ItemForm />
+          <ItemForm sendItem={sendItem} />
         </div>
       </div>
     );
