@@ -3,13 +3,45 @@ import React, { useState } from "react";
 const ItemForm = ({ sendItem }) => {
   const [ingredient, setIngredient] = useState(null);
   const [quantity, setQuantity] = useState(null);
+  // const [quantityType, setQuantityType] = useState(null);
+  const [category, setCategory] = useState("produce");
 
+  // TODO: add quantityType and foodGroup
   const handleAddItem = () => {
-    sendItem({ item: ingredient, quantity: quantity });
+    sendItem({ category, item: ingredient, quantity });
   };
 
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <div>
+        <label
+          htmlFor="category"
+          className="block text-sm font-medium leading-6 text-gray-900"
+        >
+          Category
+        </label>
+        <div className="mt-2">
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            // id="foodGroup"
+            // name="foodGroup"
+            // type="text"
+            // required
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          >
+            <option value="produce">Produce</option>
+            <option value="meat">Meat/Fish</option>
+            <option value="baking">Baking/Spices</option>
+            <option value="bread">Bread/Grains</option>
+            <option value="dairy">Dairy</option>
+            <option value="frozen">Frozen</option>
+            <option value="condiments">Condiments</option>
+            <option value="canned">Canned Goods</option>
+            <option value="misc">miscellaneous</option>
+          </select>
+        </div>
+      </div>
       <div>
         <label
           htmlFor="ingredient"
