@@ -19,7 +19,7 @@ const App = () => {
   const onRouteChange = async (route) => {
     if (route === "signout") {
       setIsSignedIn(false);
-    } else if (route === "main") {
+    } else if (route === "grocery") {
       setIsSignedIn(true);
       await fetchUserData();
       console.log("called fetch user data");

@@ -26,7 +26,7 @@ const Register = ({ onRouteChange }) => {
       // Do something with the user data, such as updating state or redirecting to another page
       // console.log("Successfully registered:", user);
       // Route to user home page
-      onRouteChange("main");
+      onRouteChange("grocery");
       // console.log("registered");
     } catch (error) {
       // Handle any errors that occur during the fetch request
