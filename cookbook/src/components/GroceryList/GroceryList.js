@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import RecipeForm from "../RecipeForm/RecipeForm";
 import ItemForm from "../ItemForm/ItemForm";
+import GroceryCategory from "../GroceryCategory/GroceryCategory";
 
 const GroceryList = () => {
   const [selection, setSelection] = useState("add");
   const [recipeList, setRecipeList] = useState([]);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState({});
   const [exists, setExists] = useState(false);
 
   useEffect(() => {
@@ -81,22 +82,18 @@ const GroceryList = () => {
     }
   };
 
-  // useEffect(() => {
-  //   fetchGroceryList();
-  // }, []);
-
   // if (selection === "view") {
   return (
     <div className="flex">
       {/* directory */}
-      <div className="border border-black mt-8 ml-8 mr-2 p-8 bg-slate-200">
+      <div className="border border-black mt-4 ml-4 mr-2 mb-2 p-4 bg-slate-200">
         <div className="flex flex-col">
-          <div className="bg-indigo-200 m-8 py-8 px-20 border border-black">
+          <div className="bg-indigo-200 m-8 py-8 px-4 border border-black">
             <h1 className="underline">Add Item</h1>
             <p>Add Individual Items to your Grocery List</p>
             <ItemForm sendItem={sendItem} />
           </div>
-          <div className="bg-indigo-200 m-8 py-8 px-20 border border-black">
+          <div className="bg-indigo-200 m-8 py-8 px-4 border border-black">
             <h1 className="underline">Add Recipe</h1>
             <p>Upload a recipe and automatically generate your grocery list</p>
             <RecipeForm setRecipe={setRecipe} />
@@ -105,17 +102,12 @@ const GroceryList = () => {
       </div>
       <div>
         {/* directory */}
-        {list && (
-          <div className="flex border border-black m-8 rounded">
-            <ul className="border border-black m-8 p-8 rounded">
-              {list.map((item, index) => (
-                <li key={index}>
-                  {item.category.toUpperCase() +
-                    ": " +
-                    item.quantity +
-                    " " +
-                    item.item}
-                </li>
+        {console.log("list equals:", list)}
+        {list !== null && Object.keys(list).length !== 0 && (
+          <div>
+            <ul className="border border-black m-8 p-2 rounded bg-slate-100">
+              {Object.keys(list).map((key, index) => (
+                <GroceryCategory key={index} category={key} items={list[key]} />
               ))}
             </ul>
           </div>

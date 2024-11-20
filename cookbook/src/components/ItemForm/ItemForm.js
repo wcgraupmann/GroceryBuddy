@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 
 const ItemForm = ({ sendItem }) => {
-  const [ingredient, setIngredient] = useState(null);
-  const [quantity, setQuantity] = useState(null);
+  const [ingredient, setIngredient] = useState("");
+  const [quantity, setQuantity] = useState("");
   // const [quantityType, setQuantityType] = useState(null);
   const [category, setCategory] = useState("produce");
 
   // TODO: add quantityType and foodGroup
   const handleAddItem = () => {
     sendItem({ category, item: ingredient, quantity });
+    setIngredient("");
+    setQuantity("");
+    setCategory("produce");
   };
 
   return (

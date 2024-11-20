@@ -37,7 +37,7 @@ const Signin = ({ onRouteChange }) => {
     <div className="flex min-h-full flex-col justify-center px-6 pb-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
-          className="mx-auto h-30 w-auto border rounded"
+          className="mx-auto h-40 w-auto border rounded"
           src={logo}
           alt="Your Company"
         />
@@ -98,7 +98,7 @@ const Signin = ({ onRouteChange }) => {
           </div>
         </div>
 
-        <div>
+        <div className="mt-2">
           <button
             onClick={onSubmitSignIn}
             type="submit"
