@@ -9,6 +9,18 @@ const GroceryList = () => {
   const [list, setList] = useState({});
   const [exists, setExists] = useState(false);
 
+  const categories = [
+    "produce",
+    "meat",
+    "baking",
+    "bread",
+    "dairy",
+    "frozen",
+    "condiments",
+    "canned",
+    "misc",
+  ];
+
   useEffect(() => {
     fetchGroceryList();
   }, []);
@@ -82,36 +94,112 @@ const GroceryList = () => {
     }
   };
 
+  const deleteItem = async (index, category) => {
+    console.log("GroceryList", category, index);
+    // delete from db
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+      const response = await fetch("http://localhost:3000/deleteItem", {
+        method: "delete",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          index: index,
+          category: category,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      const data = await response.json();
+
+      alert(data.message, data.itemToDelete);
+      fetchGroceryList();
+    } catch (error) {
+      console.error("Error signing in:", error.message);
+    }
+  };
+
+  const sendEdit = async (listItem, listQuantity, listIndex, listCategory) => {
+    console.log(
+      "GroceryList:",
+      listItem,
+      listQuantity,
+      listIndex,
+      listCategory
+    );
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+      const response = await fetch("http://localhost:3000/editItem", {
+        method: "put",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          item: listItem,
+          quantity: listQuantity,
+          index: listIndex,
+          category: listCategory,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      const data = await response.json();
+
+      alert(data.message, data.itemToEdit);
+      fetchGroceryList();
+    } catch (error) {
+      console.error("Error signing in:", error.message);
+    }
+  };
+
   // if (selection === "view") {
   return (
-    <div className="flex">
+    <div className="flex flex-row mt-4 mx-4">
       {/* directory */}
-      <div className="border border-black mt-4 ml-4 mr-2 mb-2 p-4 bg-slate-200">
+      <div className="basis-1/3 border border-black rounded px-4 pt-2 bg-slate-200">
         <div className="flex flex-col">
-          <div className="bg-indigo-200 m-8 py-8 px-4 border border-black">
-            <h1 className="underline">Add Item</h1>
-            <p>Add Individual Items to your Grocery List</p>
+          <div className="bg-indigo-200 mt-2 py-2 px-2 border border-black rounded">
+            <div className="border border-black rounded mx-2 px-2">
+              <h1 className="underline">Add Item</h1>
+              <p>Add Individual Items to your Grocery List</p>
+            </div>
             <ItemForm sendItem={sendItem} />
           </div>
-          <div className="bg-indigo-200 m-8 py-8 px-4 border border-black">
-            <h1 className="underline">Add Recipe</h1>
-            <p>Upload a recipe and automatically generate your grocery list</p>
+          <div className="bg-indigo-200 mt-2 py-2 px-2 border border-black rounded">
+            <div className="border border-black rounded mx-2 px-2">
+              <h1 className="underline">Add Recipe</h1>
+              <p>Upload a recipe to automatically populate the list!</p>
+            </div>
             <RecipeForm setRecipe={setRecipe} />
           </div>
         </div>
       </div>
-      <div>
-        {/* directory */}
-        {console.log("list equals:", list)}
-        {list !== null && Object.keys(list).length !== 0 && (
-          <div>
-            <ul className="border border-black m-8 p-2 rounded bg-slate-100">
-              {Object.keys(list).map((key, index) => (
-                <GroceryCategory key={index} category={key} items={list[key]} />
-              ))}
-            </ul>
-          </div>
-        )}
+      <div className="basis-2/3">
+        <div className="flex flex-col border border-black ml-8 px-1 rounded bg-slate-100">
+          {list !== null &&
+            // Object.keys(list).length !== 0 &&
+            categories.map((category) => (
+              <div className="border border-black m-2 p-2 rounded bg-slate-500">
+                <GroceryCategory
+                  category={category}
+                  list={list}
+                  deleteItem={deleteItem}
+                  sendEdit={sendEdit}
+                />
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );
