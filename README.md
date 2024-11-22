@@ -7,7 +7,7 @@
 <h2>How It Works</h2>
 <ol>
   <li>Create a grocery list on your personal computer by uploading your favorite recipes and individual items</li>
-  <li>Access your list with the associated mobile application to make grocery shopping a breeze!</li>
+  <li>In Development: Access your list with the associated mobile application to make grocery shopping a breeze!</li>
 </ol>
 
 # Getting Started with Create React App
