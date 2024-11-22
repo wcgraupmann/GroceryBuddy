@@ -1,7 +1,7 @@
 <h2>Grocery Buddy</h2>
 <ul>
   <li>Description: a personal project to improve my working knowledge of React</li>
-  <li>Mission: make it easier to coordinate cooking planning with grocery shopping for individuals and roommates</li>
+  <li>Mission: make it easier to coordinate meal planning with grocery shopping for individuals and roommates</li>
 </ul>
 
 <h2>How It Works</h2>
