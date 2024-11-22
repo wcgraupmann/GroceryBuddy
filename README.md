@@ -1,13 +1,14 @@
-# cookbook-club
+<h2>Grocery Buddy</h2>
+<ul>
+  <li>Description: a personal project to improve my working knowledge of React</li>
+  <li>Mission: make it easier to coordinate cooking planning with grocery shopping for individuals and roommates</li>
+</ul>
 
-Description: a personal project to improve my working knowledge of React
-
-To-do:
-
-- create home page with signin and register components
-- create recipe page
-- create profile page
-- create cookbook clubs: networks to share recipes
+<h2>How It Works</h2>
+<ol>
+  <li>Create a grocery list on your personal computer by uploading your favorite recipes and individual items</li>
+  <li>Access your list with the associated mobile application to make grocery shopping a breeze!</li>
+</ol>
 
 # Getting Started with Create React App
 
