@@ -12,12 +12,12 @@ const Navigation = ({ isSignedIn, onRouteChange, route }) => {
             >
               Feed
             </button> */}
-            <button
+            {/* <button
               className="p-3 m-1 bg-slate-200 hover:bg-slate-300 rounded"
               onClick={() => onRouteChange("cookbook")}
             >
               Cookbook
-            </button>
+            </button> */}
             <button
               className="p-3 m-1 bg-slate-200 hover:bg-slate-300 rounded"
               onClick={() => onRouteChange("grocery")}
@@ -51,12 +51,12 @@ const Navigation = ({ isSignedIn, onRouteChange, route }) => {
             >
               Feed
             </button> */}
-            <button
+            {/* <button
               className="p-3 m-1 bg-slate-500  rounded"
               onClick={() => onRouteChange("cookbook")}
             >
               Cookbook
-            </button>
+            </button> */}
             <button
               className="p-3 m-1 bg-slate-200 hover:bg-slate-300 rounded"
               onClick={() => onRouteChange("grocery")}
@@ -90,14 +90,14 @@ const Navigation = ({ isSignedIn, onRouteChange, route }) => {
             >
               Feed
             </button> */}
-            <button
+            {/* <button
               className="p-3 m-1 bg-slate-200 hover:bg-slate-300 rounded"
               onClick={() => onRouteChange("cookbook")}
             >
               Cookbook
-            </button>
+            </button> */}
             <button
-              className="p-3 m-1 bg-slate-500  rounded"
+              className="p-3 m-1 bg-slate-200 rounded"
               onClick={() => onRouteChange("grocery")}
             >
               Grocery List
@@ -129,12 +129,12 @@ const Navigation = ({ isSignedIn, onRouteChange, route }) => {
             >
               Feed
             </button> */}
-            <button
+            {/* <button
               className="p-3 m-1 bg-slate-200 hover:bg-slate-300 rounded"
               onClick={() => onRouteChange("cookbook")}
             >
               Cookbook
-            </button>
+            </button> */}
             <button
               className="p-3 m-1 bg-slate-200 hover:bg-slate-300 rounded"
               onClick={() => onRouteChange("grocery")}

@@ -4,7 +4,7 @@ import logo from "../../logo-color.png";
 const Profile = ({ onRouteChange, userInfo }) => {
   return (
     <>
-      <h1>LET'S GET COOKING {userInfo.name.toUpperCase()}!</h1>
+      <h1>LET'S GET COOKING!</h1>
       <img
         className="mx-auto h-40 w-auto border rounded"
         src={logo}
