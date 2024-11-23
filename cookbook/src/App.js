@@ -14,6 +14,8 @@ const App = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
 
+  // console.log("userInfo", userInfo);
+
   // function to change the webpage to intended route
   // also sets signin boolean on signin / signout
   const onRouteChange = async (route) => {
@@ -23,37 +25,42 @@ const App = () => {
       return;
     } else if (route === "grocery") {
       setIsSignedIn(true);
-      await fetchUserData();
+      // await fetchUserData();
+      // const token = localStorage.getItem("token");
+      console.log(
+        `localStorage.getItem("token")`,
+        localStorage.getItem("token")
+      );
       console.log("called fetch user data");
     }
     setRoute(route);
     console.log("changed route to", route);
   };
 
-  const fetchUserData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        throw new Error("No token found");
-      }
-      const response = await fetch("http://localhost:3000/protected", {
-        method: "get",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
-      const data = await response.json();
+  // const fetchUserData = async () => {
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     if (!token) {
+  //       throw new Error("No token found");
+  //     }
+  //     const response = await fetch("http://localhost:3000/protected", {
+  //       method: "get",
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch user data");
+  //     }
+  //     const data = await response.json();
 
-      setUserInfo(data);
-      console.log("current data", data);
-      console.log("current userInfo", userInfo);
-    } catch (error) {
-      console.error("Error signing in:", error.message);
-    }
-  };
+  //     setUserInfo(data);
+  //     console.log("current data", data);
+  //     console.log("current userInfo", userInfo);
+  //   } catch (error) {
+  //     console.error("Error signing in:", error.message);
+  //   }
+  // };
 
   return (
     <div className="App bg-gradient-to-r from-indigo-200 to-indigo-400">
