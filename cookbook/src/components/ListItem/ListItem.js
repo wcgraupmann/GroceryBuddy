@@ -24,7 +24,7 @@ const ListItem = ({ item, onDelete, onEdit }) => {
 
   if (!isEditing) {
     return (
-      <div className="flex justify-between border border-black rounded my-1 pl-8  bg-indigo-100">
+      <div className="flex justify-between border border-black rounded my-1  bg-indigo-100">
         <p className=" m-1 px-8 rounded">{item.toUpperCase()}</p>
         <div className="py-1 pr-1">
           <button
@@ -44,7 +44,7 @@ const ListItem = ({ item, onDelete, onEdit }) => {
     );
   } else {
     return (
-      <div className="flex justify-between border border-black rounded my-1 pl-8  bg-indigo-100">
+      <div className="flex justify-between border border-black rounded my-1   bg-indigo-100">
         <div className="flex flew-row">
           <input
             value={listItem}

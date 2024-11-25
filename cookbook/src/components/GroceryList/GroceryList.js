@@ -4,6 +4,8 @@ import ItemForm from "../ItemForm/ItemForm";
 import GroceryCategory from "../GroceryCategory/GroceryCategory";
 import RecipeCategory from "../RecipeCategory/RecipeCategory";
 
+const witClientKey = "OTC7YJLIPWKTCXM6HHFKZJB765CE4A7M";
+
 const GroceryList = () => {
   // const [selection, setSelection] = useState("add");
   // const [recipeList, setRecipeList] = useState([]);
@@ -41,21 +43,55 @@ const GroceryList = () => {
     }
   };
 
+  const getCategory = async (item) => {
+    let groceryCateogry = "misc";
+
+    //
+    try {
+      const witAiResponse = await fetch(
+        "https://api.wit.ai/message?q=" + item,
+        {
+          headers: {
+            Authorization: "Bearer " + witClientKey,
+          },
+        }
+      );
+      const witAidata = await witAiResponse.json();
+      console.log(witAidata);
+      if (witAidata.intents.length) {
+        console.log(witAidata.intents[0].name);
+        return witAidata.intents[0].name;
+      }
+    } catch (error) {
+      console.error("Error signing in:", error.message);
+    }
+  };
+
   // TODO: call fetchUserData or useEffect
   // adds grocery item to backend grocery list
   const sendItem = async (itemObj) => {
     try {
+      // console.log("itemObj", itemObj);
+      const cateogry = await getCategory(itemObj.item);
+      console.log("type = ", typeof cateogry);
+      console.log("itemObj", itemObj);
       const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("No token found");
       }
+      console.log(token);
+
       const response = await fetch("http://localhost:3000/addItem", {
         method: "post",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(itemObj),
+        body: JSON.stringify({
+          item: itemObj.item,
+          recipe: itemObj.recipe,
+          category: cateogry,
+        }),
       });
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
