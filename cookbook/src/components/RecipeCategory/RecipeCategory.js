@@ -18,7 +18,12 @@ const RecipeCategory = ({ recipe, list, deleteItem, sendEdit }) => {
 
         <div className="flex flex-col  rounded">
           {list[recipe].map((item) => (
-            <ListItem item={item.item} onDelete={onDelete} onEdit={onEdit} />
+            <ListItem
+              key={item.item}
+              item={item.item}
+              onDelete={onDelete}
+              onEdit={onEdit}
+            />
           ))}
         </div>
       </div>

@@ -45,14 +45,14 @@ const ItemForm = ({ sendItem }) => {
         <button
           onClick={clearItemForm}
           type="submit"
-          className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 m-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 m-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Clear Inputs
         </button>
         <button
           onClick={handleAddItem}
           type="submit"
-          className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 m-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 m-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
           Add Item
         </button>
