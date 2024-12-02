@@ -6,8 +6,16 @@ const Register = ({ onRouteChange }) => {
   const [password, setPassword] = useState(null);
   const [name, setName] = useState(null);
 
+  const [registerError, setRegisterError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleRegister = async () => {
     try {
+      if (!email || !password || !name) {
+        setErrorMessage("Please Complete All Fields");
+        setRegisterError(true);
+        return;
+      }
       const response = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -15,9 +23,20 @@ const Register = ({ onRouteChange }) => {
       });
 
       if (!response.ok) {
+        console.log(response);
         // handle error response here
+        console.log(
+          "!response.ok entered. Successful error message on unsuccessful registration"
+        );
+        // setRegisterError(true);
+        if (response.status === 400) {
+          setRegisterError(true);
+          setErrorMessage("Email already registered");
+        }
         throw new Error("Failed to register");
       }
+      setErrorMessage("");
+      setRegisterError(false);
 
       const data = await response.json();
       // Assuming your backend returns a JWT token upon successful sign-in
@@ -64,7 +83,13 @@ const Register = ({ onRouteChange }) => {
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      {registerError && (
+        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm bg-red-100 rounded">
+          <p>{errorMessage}</p>
+        </div>
+      )}
+
+      <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
         {/* <form className="space-y-6" action="#" method="POST"> */}
         <div>
           <label

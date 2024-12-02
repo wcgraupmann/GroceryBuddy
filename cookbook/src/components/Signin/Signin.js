@@ -5,6 +5,9 @@ const Signin = ({ onRouteChange }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
+  const [signinError, setSigninError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const onSubmitSignIn = async () => {
     try {
       const response = await fetch("http://localhost:3000/signin", {
@@ -13,9 +16,19 @@ const Signin = ({ onRouteChange }) => {
         body: JSON.stringify({ email, password }),
       });
       if (!response.ok) {
-        // handle error response here
+        // console.log(response);
+        // // handle error response here
+        // console.log(
+        //   "!response.ok entered. Successful error message on unsuccessful signin"
+        // );
+        if (response.status === 401) {
+          setSigninError(true);
+          setErrorMessage("Invalid Email or Password");
+        }
         throw new Error("Failed to register");
       }
+      setErrorMessage("");
+      setSigninError(false);
 
       const data = await response.json();
       // Assuming your backend returns a JWT token upon successful sign-in
@@ -46,7 +59,13 @@ const Signin = ({ onRouteChange }) => {
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      {signinError && (
+        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm bg-red-100 rounded">
+          <p>{errorMessage}</p>
+        </div>
+      )}
+
+      <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
         {/* <form className="space-y-6" action="#" method="POST"> */}
         <div>
           <label
