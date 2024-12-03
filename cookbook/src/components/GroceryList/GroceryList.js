@@ -3,6 +3,7 @@ import RecipeForm from "../RecipeForm/RecipeForm";
 import ItemForm from "../ItemForm/ItemForm";
 import GroceryCategory from "../GroceryCategory/GroceryCategory";
 import RecipeCategory from "../RecipeCategory/RecipeCategory";
+import emptyBasket from "../../assets/empty-basket.jpg";
 
 const witClientKey = "OTC7YJLIPWKTCXM6HHFKZJB765CE4A7M";
 
@@ -60,6 +61,8 @@ const GroceryList = () => {
       if (witAidata.intents.length) {
         console.log(witAidata.intents[0].name);
         return witAidata.intents[0].name;
+      } else {
+        return "Special Items";
       }
     } catch (error) {
       console.error("Error signing in:", error.message);
@@ -69,8 +72,12 @@ const GroceryList = () => {
   // TODO: call fetchUserData or useEffect
   // adds grocery item to backend grocery list
   const sendItem = async (itemObj) => {
+    console.log("itemObj", itemObj);
     try {
       const cateogry = await getCategory(itemObj.item);
+      // check wit ai category
+      console.log(cateogry);
+
       const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("No token found");
@@ -156,31 +163,32 @@ const GroceryList = () => {
     }
   };
 
-  if (
-    Object.keys(list).length !== 0 &&
-    list[Object.keys(list)[0]].length !== 0
-  ) {
+  if (Object.keys(list).length !== 0) {
     if (!groceryView) {
       return (
         <div className="flex flex-row mt-4 mx-4">
           {/* directory */}
           <div className="basis-1/3  p-4 pt-2 ">
+            {/*  */}
             <div className="flex flex-col">
+              {/*  */}
+              <div></div>
               <div className="bg-slate-300 mt-2 py-2 px-2 border border-black rounded">
                 <div className="border border-black rounded mx-2 px-2">
-                  <h1 className="underline">Add Item</h1>
+                  <h1 className="underline font-bold">Add Item</h1>
                   <p>Add Individual Items to your Grocery List</p>
                 </div>
                 <ItemForm sendItem={sendItem} />
               </div>
               <div className="bg-slate-300 mt-2 py-2 px-2 border border-black rounded">
                 <div className="border border-black rounded mx-2 px-2">
-                  <h1 className="underline">Add Recipe</h1>
+                  <h1 className="underline font-bold">Add Recipe</h1>
                   <p>Upload a recipe to automatically populate the list!</p>
                 </div>
                 <RecipeForm sendItem={sendItem} />
               </div>
             </div>
+            {/*  */}
           </div>
           <div className="basis-2/3 ml-8">
             <div className="flex flex-row border border-black  px-1 rounded bg-slate-500 mb-1">
@@ -201,22 +209,29 @@ const GroceryList = () => {
             <div className="flex flex-col border border-black px-1 rounded bg-slate-100">
               {Object.keys(list).length !== 0 &&
                 // Object.keys(list).length !== 0 &&
-                Object.keys(list).map((recipe) => (
-                  <div className="border border-black m-2 p-2 rounded bg-slate-500">
-                    {/* <GroceryCategory
-                      category={category}
-                      list={list}
-                      deleteItem={deleteItem}
-                      sendEdit={sendEdit}
-                    /> */}
-                    <RecipeCategory
-                      recipe={recipe}
-                      list={list}
-                      deleteItem={deleteItem}
-                      sendEdit={sendEdit}
-                    />
-                  </div>
-                ))}
+                Object.keys(list).map((recipe, index) => {
+                  if (list[recipe].length !== 0) {
+                    return (
+                      <div
+                        key={index}
+                        className="border border-black m-2 p-2 rounded bg-slate-500"
+                      >
+                        {/* <GroceryCategory
+                          category={category}
+                          list={list}
+                          deleteItem={deleteItem}
+                          sendEdit={sendEdit}
+                        /> */}
+                        <RecipeCategory
+                          recipe={recipe}
+                          list={list}
+                          deleteItem={deleteItem}
+                          sendEdit={sendEdit}
+                        />
+                      </div>
+                    );
+                  }
+                })}
             </div>
           </div>
         </div>
@@ -229,14 +244,14 @@ const GroceryList = () => {
             <div className="flex flex-col">
               <div className="bg-slate-300 mt-2 py-2 px-2 border border-black rounded">
                 <div className="border border-black rounded mx-2 px-2">
-                  <h1 className="underline">Add Item</h1>
+                  <h1 className="underline font-bold">Add Item</h1>
                   <p>Add Individual Items to your Grocery List</p>
                 </div>
                 <ItemForm sendItem={sendItem} />
               </div>
               <div className="bg-slate-300 mt-2 py-2 px-2 border border-black rounded">
                 <div className="border border-black rounded mx-2 px-2">
-                  <h1 className="underline">Add Recipe</h1>
+                  <h1 className="underline font-bold">Add Recipe</h1>
                   <p>Upload a recipe to automatically populate the list!</p>
                 </div>
                 <RecipeForm sendItem={sendItem} />
@@ -281,22 +296,33 @@ const GroceryList = () => {
           <div className="flex flex-col">
             <div className="bg-slate-300 mt-2 py-2 px-2 border border-black rounded">
               <div className="border border-black rounded mx-2 px-2">
-                <h1 className="underline">Add Item</h1>
+                <h1 className="underline font-bold">Add Item</h1>
                 <p>Add Individual Items to your Grocery List</p>
               </div>
               <ItemForm sendItem={sendItem} />
             </div>
             <div className="bg-slate-300 mt-2 py-2 px-2 border border-black rounded">
               <div className="border border-black rounded mx-2 px-2">
-                <h1 className="underline">Add Recipe</h1>
+                <h1 className="underline font-bold">Add Recipe</h1>
                 <p>Upload a recipe to automatically populate the list!</p>
               </div>
               <RecipeForm sendItem={sendItem} />
             </div>
           </div>
         </div>
-        <div className="basis-2/3  p-4 pt-2 border border-black rounded">
-          <h1>Your List Is Empty</h1>
+        <div className="basis-2/3  p-4 pt-2 border border-black rounded bg-slate-200 max-h-[500px]">
+          <div className="flex flex-col h-full">
+            <h1 className="p-8 text-center bg-indigo-300 rounded-lg font-bold">
+              {"Your Grocery Basket Is Empty!".toUpperCase()}
+            </h1>
+            <div className="flex-1 flex justify-center items-center">
+              <img
+                src={emptyBasket}
+                alt="emptyBasket"
+                className="max-h-[300px] object-contain rounded-lg "
+              />
+            </div>
+          </div>
         </div>
       </div>
     );
