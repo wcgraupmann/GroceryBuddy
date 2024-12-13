@@ -18,6 +18,18 @@ const GroceryList = () => {
     fetchGroceryList();
   }, []);
 
+  useEffect(() => {
+    fetchGroceryList();
+
+    // Define the interval to refetch the grocery list every 10 seconds
+    const interval = setInterval(() => {
+      fetchGroceryList();
+    }, 10000); // 10 seconds
+
+    // Cleanup interval when the component unmounts
+    return () => clearInterval(interval);
+  }, []);
+
   // fetch grocery list from backend
   const fetchGroceryList = async () => {
     try {
@@ -46,7 +58,6 @@ const GroceryList = () => {
   };
 
   const getCategory = async (item) => {
-    let groceryCateogry = "misc";
     try {
       const witAiResponse = await fetch(
         `https://api.wit.ai/message?v=20240101&q=${encodeURIComponent(item)}`,
@@ -61,9 +72,9 @@ const GroceryList = () => {
       console.log(witAidata);
       if (witAidata.intents.length) {
         console.log(witAidata.intents[0].name);
-        return witAidata.intents[0].name;
+        return witAidata.intents[0].name.replaceAll("_", " ");
       } else {
-        return "Special Items";
+        return "Other Items";
       }
     } catch (error) {
       console.error("Error signing in:", error.message);
@@ -233,6 +244,8 @@ const GroceryList = () => {
                         />
                       </div>
                     );
+                  } else {
+                    return <div></div>;
                   }
                 })}
             </div>
