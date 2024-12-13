@@ -5,7 +5,7 @@ import GroceryCategory from "../GroceryCategory/GroceryCategory";
 import RecipeCategory from "../RecipeCategory/RecipeCategory";
 import emptyBasket from "../../assets/empty-basket.jpg";
 
-const witClientKey = "OTC7YJLIPWKTCXM6HHFKZJB765CE4A7M";
+const witClientKey = "UX7IIBGQ7BONGFHX7P5QSGPZ3BFNOISA";
 
 const GroceryList = () => {
   const [list, setList] = useState({});
@@ -46,13 +46,14 @@ const GroceryList = () => {
   };
 
   const getCategory = async (item) => {
-    // let groceryCateogry = "misc";
+    let groceryCateogry = "misc";
     try {
       const witAiResponse = await fetch(
-        "https://api.wit.ai/message?q=" + item,
+        `https://api.wit.ai/message?v=20240101&q=${encodeURIComponent(item)}`,
         {
           headers: {
-            Authorization: "Bearer " + witClientKey,
+            Authorization: `Bearer ${witClientKey}`,
+            Accept: "application/json",
           },
         }
       );
@@ -74,9 +75,11 @@ const GroceryList = () => {
   const sendItem = async (itemObj) => {
     console.log("itemObj", itemObj);
     try {
+      console.log("itemObj.item", itemObj.item);
       const cateogry = await getCategory(itemObj.item);
       // check wit ai category
       console.log(cateogry);
+      // const cateogry = await getCategory(itemObj.item);
 
       const token = localStorage.getItem("token");
       if (!token) {

@@ -9,7 +9,8 @@ const Register = ({ onRouteChange }) => {
   const [registerError, setRegisterError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    e.preventDefault();
     try {
       if (!email || !password || !name) {
         setErrorMessage("Please Complete All Fields");
@@ -89,7 +90,10 @@ const Register = ({ onRouteChange }) => {
         </div>
       )}
 
-      <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+      <form
+        className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm"
+        onSubmit={handleRegister}
+      >
         {/* <form className="space-y-6" action="#" method="POST"> */}
         <div>
           <label
@@ -160,7 +164,7 @@ const Register = ({ onRouteChange }) => {
 
         <div className="mt-2">
           <button
-            onClick={handleRegister}
+            // onClick={handleRegister}
             type="submit"
             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
@@ -168,7 +172,7 @@ const Register = ({ onRouteChange }) => {
           </button>
         </div>
         {/* </form> */}
-      </div>
+      </form>
     </div>
   );
 };

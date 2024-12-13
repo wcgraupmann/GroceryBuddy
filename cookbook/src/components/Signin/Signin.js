@@ -8,7 +8,8 @@ const Signin = ({ onRouteChange }) => {
   const [signinError, setSigninError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const onSubmitSignIn = async () => {
+  const onSubmitSignIn = async (e) => {
+    e.preventDefault();
     try {
       const response = await fetch("http://localhost:3000/signin", {
         method: "post",
@@ -65,7 +66,10 @@ const Signin = ({ onRouteChange }) => {
         </div>
       )}
 
-      <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+      <form
+        className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm"
+        onSubmit={onSubmitSignIn}
+      >
         {/* <form className="space-y-6" action="#" method="POST"> */}
         <div>
           <label
@@ -119,25 +123,14 @@ const Signin = ({ onRouteChange }) => {
 
         <div className="mt-2">
           <button
-            onClick={onSubmitSignIn}
+            // onClick={onSubmitSignIn}
             type="submit"
             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Sign in
           </button>
         </div>
-        {/* </form> */}
-
-        {/* <p class="mt-10 text-center text-sm text-gray-500">
-            Not a member?
-            <a
-              href="#"
-              class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-            >
-              Start a 14 day free trial
-            </a>
-          </p> */}
-      </div>
+      </form>
     </div>
   );
 };
