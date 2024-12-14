@@ -13,8 +13,31 @@ const App = () => {
   const [route, setRoute] = useState("home");
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [groupIds, setGroupIds] = useState([]);
 
-  // console.log("userInfo", userInfo);
+  const fetchGroupIds = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+      const response = await fetch("http://localhost:3000/groupIds", {
+        method: "get",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      const data = await response.json();
+      const { groupIds } = data;
+      setGroupIds(groupIds);
+      console.log("fetched groupIds", groupIds);
+    } catch (error) {
+      console.error("Error signing in:", error.message);
+    }
+  };
 
   // function to change the webpage to intended route
   // also sets signin boolean on signin / signout
@@ -24,6 +47,7 @@ const App = () => {
       setRoute("signin");
       return;
     } else if (route === "grocery") {
+      await fetchGroupIds();
       setIsSignedIn(true);
       // await fetchUserData();
       // const token = localStorage.getItem("token");
@@ -80,7 +104,7 @@ const App = () => {
       ) : route === "profile" ? (
         <Profile onRouteChange={onRouteChange} userInfo={userInfo} />
       ) : route === "grocery" ? (
-        <GroceryList />
+        <GroceryList groupIds={groupIds} />
       ) : (
         <Register onRouteChange={onRouteChange} />
       )}

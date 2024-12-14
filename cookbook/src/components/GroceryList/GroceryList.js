@@ -7,12 +7,13 @@ import emptyBasket from "../../assets/empty-basket.jpg";
 
 const witClientKey = "UX7IIBGQ7BONGFHX7P5QSGPZ3BFNOISA";
 
-const GroceryList = () => {
+const GroceryList = ({ groupIds }) => {
   const [list, setList] = useState({});
   const [sortedList, setSortedList] = useState({});
   const [groceryView, setGroceryView] = useState(false);
 
-  console.log("list useState", list);
+  // console.log("list useState", list);
+  console.log("groupIds", groupIds);
 
   useEffect(() => {
     fetchGroceryList();
@@ -38,10 +39,12 @@ const GroceryList = () => {
         throw new Error("No token found");
       }
       const response = await fetch("http://localhost:3000/groceryList", {
-        method: "get",
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({ groupId: groupIds[0] }),
       });
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
@@ -106,6 +109,7 @@ const GroceryList = () => {
           item: itemObj.item,
           recipe: itemObj.recipe,
           category: cateogry,
+          groupId: groupIds[0],
         }),
       });
       if (!response.ok) {
@@ -134,6 +138,7 @@ const GroceryList = () => {
         body: JSON.stringify({
           item: item,
           recipe: recipe,
+          groupId: groupIds[0],
         }),
       });
       if (!response.ok) {
@@ -164,6 +169,7 @@ const GroceryList = () => {
           item: listItem,
           newItem: newListItem,
           recipe: listRecipe,
+          groupId: groupIds[0],
         }),
       });
       if (!response.ok) {
@@ -186,7 +192,12 @@ const GroceryList = () => {
             {/*  */}
             <div className="flex flex-col">
               {/*  */}
-              <div></div>
+              <button
+                // onClick={doSomethingLater}
+                className="flex w-full justify-center rounded-md bg-slate-600 px-3 py-1.5 m-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                {`${groupIds[0].toUpperCase()}'s GROCERY LIST`}
+              </button>
               <div className="bg-slate-300 mt-2 py-2 px-2 border border-black rounded">
                 <div className="border border-black rounded mx-2 px-2">
                   <h1 className="underline font-bold">Add Item</h1>
@@ -258,6 +269,12 @@ const GroceryList = () => {
           {/* directory */}
           <div className="basis-1/3  p-4 pt-2 ">
             <div className="flex flex-col">
+              <button
+                // onClick={doSomethingLater}
+                className="flex w-full justify-center rounded-md bg-slate-600 px-3 py-1.5 m-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                {`${groupIds[0].toUpperCase()}'s GROCERY LIST`}
+              </button>
               <div className="bg-slate-300 mt-2 py-2 px-2 border border-black rounded">
                 <div className="border border-black rounded mx-2 px-2">
                   <h1 className="underline font-bold">Add Item</h1>
@@ -295,7 +312,10 @@ const GroceryList = () => {
               {Object.keys(sortedList).length !== 0 &&
                 // Object.keys(list).length !== 0 &&
                 Object.keys(sortedList).map((category) => (
-                  <div className="border border-black m-2 p-2 rounded bg-slate-500">
+                  <div
+                    key={category}
+                    className="border border-black m-2 p-2 rounded bg-slate-500"
+                  >
                     <GroceryCategory category={category} list={sortedList} />
                   </div>
                 ))}
@@ -310,6 +330,12 @@ const GroceryList = () => {
         {/* directory */}
         <div className="basis-1/3  p-4 pt-2 ">
           <div className="flex flex-col">
+            <button
+              // onClick={doSomethingLater}
+              className="flex w-full justify-center rounded-md bg-slate-600 px-3 py-1.5 m-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              {`${groupIds[0].toUpperCase()}'s GROCERY LIST`}
+            </button>
             <div className="bg-slate-300 mt-2 py-2 px-2 border border-black rounded">
               <div className="border border-black rounded mx-2 px-2">
                 <h1 className="underline font-bold">Add Item</h1>
