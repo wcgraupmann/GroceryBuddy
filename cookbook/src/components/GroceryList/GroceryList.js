@@ -5,35 +5,54 @@ import GroceryCategory from "../GroceryCategory/GroceryCategory";
 import RecipeCategory from "../RecipeCategory/RecipeCategory";
 import emptyBasket from "../../assets/empty-basket.jpg";
 
+// TODO: convert key to .env variable
 const witClientKey = "UX7IIBGQ7BONGFHX7P5QSGPZ3BFNOISA";
 
+/**
+ * Renders the selected group's grocery list.
+ * The default group shown will be the first group
+ *
+ * @param {groupIds} a - The first number.
+ * @description Renders the selected group's grocery list
+ */
 const GroceryList = ({ groupIds }) => {
+  // list - groups the list into recipes
   const [list, setList] = useState({});
+  // sortedList - groups the list into grocery categories
   const [sortedList, setSortedList] = useState({});
   const [groceryView, setGroceryView] = useState(false);
 
   // console.log("list useState", list);
   console.log("groupIds", groupIds);
 
+  // fetch the grocery list on intial page load
+  // TODO: check if this useEffect is redundant
   useEffect(() => {
     fetchGroceryList();
   }, []);
 
+  // fetch on an interval to sync with any changes made on the mobile app
   useEffect(() => {
     fetchGroceryList();
 
-    // Define the interval to refetch the grocery list every 10 seconds
+    // Define the interval to refetch the grocery list (every 10 seconds)
     const interval = setInterval(() => {
       fetchGroceryList();
-    }, 10000); // 10 seconds
+    }, 10000);
 
     // Cleanup interval when the component unmounts
     return () => clearInterval(interval);
   }, []);
 
-  // fetch grocery list from backend
+  /**
+   * Fetches grocery lists for the currently selected group from the backend.
+   * @description - assigns list sorted by recipe to list
+   * @description - assigns list sorted by category to sortedList
+   * @param {groupIds}: array of group ids that the user has joined
+   */
   const fetchGroceryList = async () => {
     try {
+      // check if user has access to endpoint by checking for valid token
       const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("No token found");
@@ -51,8 +70,6 @@ const GroceryList = ({ groupIds }) => {
       }
       const data = await response.json();
       const { recipes, groceryList } = data;
-      console.log("fetched recipe list", recipes);
-      console.log("fetched groceryList", groceryList);
       setList(recipes);
       setSortedList(groceryList);
     } catch (error) {
@@ -60,6 +77,11 @@ const GroceryList = ({ groupIds }) => {
     }
   };
 
+  /**
+   * Categorizes item into a grocery category based on a trained dataset in Wit AI
+   * @param {string} item : the name of the item in the list
+   * @returns the category it is associated with or "Other Items" if it doesn't fit a specific group
+   */
   const getCategory = async (item) => {
     try {
       const witAiResponse = await fetch(
@@ -72,9 +94,7 @@ const GroceryList = ({ groupIds }) => {
         }
       );
       const witAidata = await witAiResponse.json();
-      console.log(witAidata);
       if (witAidata.intents.length) {
-        console.log(witAidata.intents[0].name);
         return witAidata.intents[0].name.replaceAll("_", " ");
       } else {
         return "Other Items";
@@ -84,17 +104,16 @@ const GroceryList = ({ groupIds }) => {
     }
   };
 
-  // TODO: call fetchUserData or useEffect
-  // adds grocery item to backend grocery list
+  /**
+   * Adds grocery item to backend grocery list
+   * @param {object} itemObj - contains item, associated recipe, associated category, and selected groupId
+   * @description - adds item to backend and fetches updated list
+   */
   const sendItem = async (itemObj) => {
-    console.log("itemObj", itemObj);
     try {
-      console.log("itemObj.item", itemObj.item);
+      // assign wit ai category
       const cateogry = await getCategory(itemObj.item);
-      // check wit ai category
-      console.log(cateogry);
-      // const cateogry = await getCategory(itemObj.item);
-
+      // check if user has access to endpoint by checking for valid token
       const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("No token found");
@@ -115,16 +134,20 @@ const GroceryList = ({ groupIds }) => {
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
       }
-      // const data = await response.json();
       await fetchGroceryList();
     } catch (error) {
       console.error("Error signing in:", error.message);
     }
   };
 
+  /**
+   * Delete item from backend list of selected group
+   * @param {string} item - item to delete
+   * @param {string} recipe - recipe category to delete item from
+   */
   const deleteItem = async (item, recipe) => {
-    // delete from backend
     try {
+      // check if user has access to endpoint by checking for valid token
       const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("No token found");
@@ -147,14 +170,21 @@ const GroceryList = ({ groupIds }) => {
       const data = await response.json();
 
       await fetchGroceryList();
-      alert(data.message, data.itemToDelete);
+      alert(data.message, data.itemToDelete); // enables screen to render to show updated list
     } catch (error) {
       console.error("Error signing in:", error.message);
     }
   };
 
+  /**
+   * Edit item in backend list of selected group
+   * @param {string} newListItem - updated item
+   * @param {string} listItem - previous item
+   * @param {string} listRecipe - name of recipe group that holds item
+   */
   const sendEdit = async (newListItem, listItem, listRecipe) => {
     try {
+      // check if user has access to endpoint by checking for valid token
       const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("No token found");
@@ -177,13 +207,18 @@ const GroceryList = ({ groupIds }) => {
       }
       const data = await response.json();
       await fetchGroceryList();
-      alert(data.message, data.itemToEdit);
+      alert(data.message, data.itemToEdit); // enables screen to render to show updated list
     } catch (error) {
       console.error("Error signing in:", error.message);
     }
   };
 
+  /**
+   * Renders grocery list with item forms when list is populated
+   * Otherwise, displays empty cart
+   */
   if (Object.keys(list).length !== 0) {
+    // default: display list grouped by recipes and "Other Items"
     if (!groceryView) {
       return (
         <div className="flex flex-row mt-4 mx-4">
@@ -264,6 +299,7 @@ const GroceryList = ({ groupIds }) => {
         </div>
       );
     } else {
+      // sorted view: display list grouped by grocery categories
       return (
         <div className="flex flex-row mt-4 mx-4">
           {/* directory */}
@@ -331,6 +367,7 @@ const GroceryList = ({ groupIds }) => {
         <div className="basis-1/3  p-4 pt-2 ">
           <div className="flex flex-col">
             <button
+              // TODO: add function to enable toggling a user's groups
               // onClick={doSomethingLater}
               className="flex w-full justify-center rounded-md bg-slate-600 px-3 py-1.5 m-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
